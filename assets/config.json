@@ -1,0 +1,24 @@
+{
+  "hostname": "bouquineur2000.fr",
+  "port": 80,
+  "viewEngine": "ejs",
+  "log": "self",
+  "paths": {
+    "views": "./app/views",
+    "public": "./app/public",
+    "static": "./app/static",
+  },
+  "session": {
+    "secret": "victoria's secretness ness nest?"
+  },
+  "database": {
+    "urls": {
+      "default": "mongodb://localhost:27017/bouquineur"
+    },
+    "config": {
+      "useCreateIndex": true,
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true
+    }
+  }
+}
