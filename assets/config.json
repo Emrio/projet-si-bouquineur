@@ -6,7 +6,7 @@
   "paths": {
     "views": "./app/views",
     "public": "./app/public",
-    "static": "./app/static",
+    "static": "./app/static"
   },
   "session": {
     "secret": "victoria's secretness ness nest?"
