@@ -6,4 +6,8 @@ router.get('/home', controller.getWelcomePage)
 
 router.get('/dashboard', controller.getDashboard)
 
+router.get('/browse', controller.browseLibrary)
+
+router.get('/borrowed', controller.myBooks)
+
 export default router
