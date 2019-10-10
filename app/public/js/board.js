@@ -59,4 +59,5 @@
   preload('/assets/img/loader.gif')
   customAnchor()
   goto('/home')
+  feather.replace()
 })()
