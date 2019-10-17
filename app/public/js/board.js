@@ -1,5 +1,6 @@
 /* global XMLHttpRequest Image Base64 feather */
 (function () {
+  window.feather = window.feather || { replace: () => null } // internet less setup
   function parseScripts (elmt) {
     if (elmt.tagName === 'SCRIPT') {
       const script = document.createElement('script')
