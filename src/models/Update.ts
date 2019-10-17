@@ -3,7 +3,7 @@ import { User } from './User'
 
 export interface Update extends mongoose.Document {
   bookId: number
-  action: 'WIDTHDRAW' | 'RETURN'
+  action: 'WITHDRAW' | 'RETURN'
   user: User
   date: Date
 }
