@@ -1,6 +1,13 @@
 declare namespace Express {
   export interface Request {
     flash: (type: 'error' | 'success' | 'info' | 'warning', content: string) => void
+    user?: User
+  }
+
+  interface User {
+    _id: any
+    username: string
+    rfid: string
   }
 
   export interface Response {
