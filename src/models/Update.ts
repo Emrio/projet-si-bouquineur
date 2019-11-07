@@ -15,3 +15,8 @@ export const Update = mongoose.model<Update>('Update', new mongoose.Schema({
   user: { type: mongoose.Types.ObjectId, ref: 'User' },
   date: Date
 }))
+
+export async function getUserHistory (id: mongoose.Types.ObjectId): Promise<Update[]> {
+  const updates = await Update.find({ user: id })
+  return await Promise.all(updates.map(update => update.populate('book').execPopulate()))
+}
