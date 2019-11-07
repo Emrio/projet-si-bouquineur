@@ -1,0 +1,24 @@
+<div class="container">
+  <h4>Vos dernères transactions</h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Transaction</th>
+          <th>Book</th>
+          <th>Date of transaction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% console.log(history) %>
+        <% for (const update of history.slice(0, 200)) { %>
+          <tr>
+            <td><%= update.action === 'WITHDRAW' ? 'Retrait' : 'Retour' %></td>
+            <td><span class="font-weight-bold"><%= update.book.title %></span> de <%= update.book.author %></td>
+            <td><%= moment(update.date).format('HH:mm [le] DD/MM/YYYY') %> (<%= moment(update.date).locale('fr').fromNow() %>)</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
