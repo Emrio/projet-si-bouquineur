@@ -1,16 +1,17 @@
 import mongoose from 'mongoose'
 import { User } from './User'
+import { Book } from './Book'
 
 export interface Update extends mongoose.Document {
-  bookId: number
+  book: Book
   action: 'WITHDRAW' | 'RETURN'
   user: User
   date: Date
 }
 
 export const Update = mongoose.model<Update>('Update', new mongoose.Schema({
-  bookId: String,
+  book: { type: mongoose.Types.ObjectId, ref: 'Book' },
   action: String,
-  user: User.schema,
+  user: { type: mongoose.Types.ObjectId, ref: 'User' },
   date: Date
 }))
