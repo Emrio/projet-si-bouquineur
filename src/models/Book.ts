@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 export interface Book extends mongoose.Document {
-  bookId: number
+  bookId: string
   title: string
   author: string
   summary: string
