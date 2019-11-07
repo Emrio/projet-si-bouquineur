@@ -17,7 +17,7 @@ body {
 
 /* Main cotent */
 [role="main"] {
-  padding-top: 48px; /* Space for fixed navbar */
+  padding-top: 18px; /* Space for fixed navbar */
 }
 
 /* Sidebar */
