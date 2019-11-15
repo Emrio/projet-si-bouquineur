@@ -1,3 +1,27 @@
-list of borrowed items + either:
-- instructions to return
-- button to return
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Mes emprunts</h1>
+</div>
+<div class="table-responsive">
+  <% if (borrowed.length === 0) { %>
+    <p>Vous n'avez aucun emprunts en cours. Vous pouvez rechercher des livres dans l'onglet "Bibliothèque"</p>
+  <% } else { %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Livre</th>
+          <th>Date de l'emprunt</th>
+          <th>Rendre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const book of borrowed) { %>
+          <tr>
+            <td><span class="font-weight-bold"><%= book.title %></span> de <%= book.author %></td>
+            <td><%= moment(book.dateUsedBy).format('HH:mm [le] DD/MM/YYYY') %> (<%= moment(book.dateUsedBy).locale('fr').fromNow() %>)</td>
+            <td><a href="/return/<%= book.bookId %>">Rendre</a></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } %>
+</div>

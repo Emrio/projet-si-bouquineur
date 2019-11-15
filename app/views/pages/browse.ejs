@@ -1,1 +1,28 @@
-list of books with a button to withdraw
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+  <h1 class="h2">Bibliothèque</h1>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Résumé</th>
+        <th>Disponibilité</th>
+        <th>Emprunter</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% console.log(library) %>
+      <% for (const book of library) { %>
+        <tr>
+          <td><%= book.title %></td>
+          <td><%= book.author %></td>
+          <td><%= book.summary %></td>
+          <td><%- book.usedBy ? '<span class="text-danger">Indisponible</span>' : '<span class="text-success">Disponible</span>' %></td>
+          <td><%- book.usedBy ? '' : `<a href="/withraw/${book.bookId}">Emprunter</a>` %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
