@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express'
 import moment from 'moment'
-import { getUserHistory } from '../../../models/Update'
+import { getUserHistory, updateBookStatus } from '../../../models/Update'
 import { getLibrary, getBorrowed, getBook } from '../../../models/Book'
 
 export const getWelcomePage: RequestHandler = function (_req, res) {
@@ -26,6 +26,36 @@ export const browseLibrary: RequestHandler = function (_req, res) {
     })
 }
 
+export const returnBook: RequestHandler = function (req, res) {
+  const { bookId } = req.params
+  if (!(bookId && typeof bookId === 'string')) return res.api.buildBoard('returnSummary', 'Id de livre incorrect', { book: { title: '' }, info: "Ce livre n'existe pas: Id de livre incorrect" })
+  getBook(bookId)
+    .then(async book => {
+      if (!book || book.usedBy === null) return res.api.buildBoard('returnSummary', 'Livre inconnu', { book: { title: '' }, info: "Ce livre n'existe pas: Livre inconnu" })
+      await updateBookStatus(book._id, req.user!._id, 'RETURN')
+      return res.api.buildBoard('returnSummary', 'Livre rendu', { book, info: 'Vous pouvez remettre à un vendeur' })
+    })
+    .catch(err => {
+      console.error(err)
+      res.api.buildError(500, 'Error while returning a book')
+    })
+}
+
+export const borrowBook: RequestHandler = function (req, res) {
+  const { bookId } = req.params
+  if (!(bookId && typeof bookId === 'string')) return res.api.buildBoard('borrowSummary', 'Id de livre incorrect', { book: { title: '' }, info: "Ce livre n'existe pas: Id de livre incorrect" })
+  getBook(bookId)
+    .then(async book => {
+      if (!book || book.usedBy !== null) return res.api.buildBoard('borrowSummary', 'Livre inconnu', { book: { title: '' }, info: "Emprunt impossible: Livre inconnu ou déjà emprunté" })
+      const successful = true // TODO: Hook to Arduino
+      if (!successful) return res.api.buildBoard('borrowSummary', "Le livre n'a pas pu être trouvé", { book, info: "Nous n'avons pas pu retrouver le livre dans notre banque. Veuillez contacter un vendeur." })
+      await updateBookStatus(book._id, req.user!._id, 'WITHDRAW')
+      return res.api.buildBoard('borrowSummary', 'Le livre a été emprunté', { book, info: 'Bonne lecture :)' })
+    })
+    .catch(err => {
+      console.error(err)
+      res.api.buildError(500, 'Error while borrowing a book')
+    })
 }
 
 export const myBooks: RequestHandler = function (req, res) {

@@ -10,4 +10,8 @@ router.get('/browse', controller.browseLibrary)
 
 router.get('/borrowed', controller.myBooks)
 
+router.get('/return/:bookId', controller.returnBook)
+
+router.get('/withraw/:bookId', controller.borrowBook)
+
 export default router
