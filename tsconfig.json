@@ -17,6 +17,9 @@
     // "types": []
   },
   "include": [
-      "./src/**/*"
+    "./src/**/*"
+  ],
+  "files": [
+    "./src/types/serialport.d.ts"
   ]
 }
