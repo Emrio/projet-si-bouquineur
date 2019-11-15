@@ -20,5 +20,9 @@
       "useNewUrlParser": true,
       "useUnifiedTopology": true
     }
+  },
+  "arduino": {
+    "path": "/dev/cu.usbmodem14301",
+    "baudRate": 9600
   }
 }
