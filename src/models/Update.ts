@@ -26,8 +26,6 @@ export async function getUserHistory (id: mongoose.Types.ObjectId): Promise<Upda
 export async function updateBookStatus (book: mongoose.Types.ObjectId, user: mongoose.Types.ObjectId, action: Action): Promise<Update> {
   const update = new Update({ book, user, action })
   await update.save()
-  console.log(1)
   await setBookStatus(book, action === 'WITHDRAW' ? user : null, action === 'WITHDRAW' ? new Date() : undefined)
-  console.log(2)
   return update
 }

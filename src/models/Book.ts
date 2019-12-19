@@ -35,7 +35,6 @@ export async function getBook (bookId: string): Promise<Book | null> {
 
 export async function setBookStatus (bookId: mongoose.Types.ObjectId, owner: mongoose.Types.ObjectId | null, date?: Date): Promise<void> {
   const query = { $set: date ? { usedBy: owner || undefined, date } : { usedBy: owner || undefined } }
-  console.log({ query }, { bookId })
   await Book.updateOne({ _id: bookId }, query)
   return
 }
