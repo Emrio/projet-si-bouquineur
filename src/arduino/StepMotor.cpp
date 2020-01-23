@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "StepMotor.hpp"
+#define MAX_POSITION 5000 // TODO: Find real value
 
 StepMotor::StepMotor () {}
 
@@ -43,6 +44,8 @@ void StepMotor::ccw () {
   digitalWrite(C, LOW);
   digitalWrite(D, HIGH);
   delay(speed);
+
+  this->position++;
 }
 
 void StepMotor::cw () {
@@ -69,4 +72,17 @@ void StepMotor::cw () {
   digitalWrite(C, LOW);
   digitalWrite(D, LOW);
   delay(speed);
+
+  this->position--;
+}
+
+void StepMotor::reset (bool force = false) {
+  int i = 0;
+  while (!this->reachedEdge() || (force && i++ < MAX_POSITION)) {
+    this->step(false);
+  }
+}
+
+bool StepMotor::reachedEdge () {
+  return this->position <= 0 || this->position >= MAX_POSITION
 }
