@@ -32,7 +32,7 @@
         }
       }
     }
-    r.open('GET', '//bouquineur2000.fr/api/boards' + location)
+    r.open('GET', `${document.location.origin}/api/boards${location}`)
     r.send()
   }
 
