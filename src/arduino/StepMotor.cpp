@@ -7,7 +7,7 @@ void StepMotor::setSpeed (int _speed) {
   speed = _speed;
 }
 
-void StepMotor::step(bool clockwise = false) {
+void StepMotor::step (bool clockwise = false) {
   digitalWrite(9, HIGH);
   digitalWrite(10, HIGH);
   if (clockwise) {
@@ -15,6 +15,8 @@ void StepMotor::step(bool clockwise = false) {
   } else {
     this->ccw();
   }
+  digitalWrite(9, LOW);
+  digitalWrite(10, LOW);
 }
 
 void StepMotor::ccw () {
