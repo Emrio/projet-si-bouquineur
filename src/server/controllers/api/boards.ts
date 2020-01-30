@@ -47,7 +47,7 @@ export const borrowBook: RequestHandler = function (req, res) {
   getBook(bookId)
     .then(async book => {
       if (!book || book.usedBy !== null) return res.api.buildBoard('borrowSummary', 'Livre inconnu', { book: { title: '' }, info: "Emprunt impossible: Livre inconnu ou déjà emprunté" })
-      const successful = true // TODO: Hook to Arduino
+      const successful = await arduino.getBook(book.bookId)
       if (!successful) return res.api.buildBoard('borrowSummary', "Le livre n'a pas pu être trouvé", { book, info: "Nous n'avons pas pu retrouver le livre dans notre banque. Veuillez contacter un vendeur." })
       await updateBookStatus(book._id, req.user!._id, 'WITHDRAW')
       return res.api.buildBoard('borrowSummary', 'Le livre a été emprunté', { book, info: 'Bonne lecture :)' })
