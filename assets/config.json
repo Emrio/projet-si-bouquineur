@@ -22,7 +22,7 @@
     }
   },
   "arduino": {
-    "path": "/dev/cu.usbmodem14301",
+    "path": "/dev/cu.usbmodem14101",
     "baudRate": 9600
   }
 }
