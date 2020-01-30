@@ -8,25 +8,21 @@ import { StepMotor } from './StepMotor'
 const debug = utils.debug('arduino')
 
 export class Arduino extends EventEmitter {
+  public board = board(utils.config.arduino.path)
   public arm = new Arm(this)
   public barCodeReader = new BarCodeReader(this)
   public rfid = new RFID(this)
   public stepper = new StepMotor(this)
-  public board = board(utils.config.arduino.path)
 
   constructor () {
     super()
-    this.board.on('ready', this.main)
+    this.board.on('ready', () => this.main())
   }
 
   private main () {
     debug('Ready!')
-    // setInterval(this.loop, 100)
+    this.rfid.load()
   }
-
-  // private loop () {
-  //   // TODO: Update RFID value
-  // }
 
   async getBook (id: string): Promise<boolean> {
     debug('Getting book...')
