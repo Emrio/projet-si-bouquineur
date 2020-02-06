@@ -10,7 +10,7 @@ export class StepMotor {
   private B: number = 11
   private C: number = 12
   private D: number = 13
-  private MAX_POSITION: number = 100
+  private MAX_POSITION: number = 100 // TODO: Find real value
 
   private async ccw (): Promise<void> {
     const board = this.arduino.board

@@ -19,7 +19,7 @@ export class Arduino extends EventEmitter {
     this.board.on('ready', () => this.main())
   }
 
-  private main () {
+  private main (): void {
     debug('Ready!')
     this.rfid.load()
   }
