@@ -1,5 +1,29 @@
-/* global XMLHttpRequest Image Base64 feather */
+/* global $ XMLHttpRequest Image Base64 feather io */
 (function () {
+  console.log('hello')
+  const socket = io(document.location.origin)
+  socket.on('login', (rfid) => {
+    console.log('requested login :', rfid)
+    $.ajax({
+      type: 'POST',
+      url: `${document.location.origin}/api/auth/login`,
+      data: { rfid },
+      dataType: 'json',
+      success: () => goto('/dashboard'),
+      error: (err, res) => console.error(err, res)
+    })
+  })
+
+  function disconnect () {
+    console.log('hi')
+    $.ajax({
+      type: 'POST',
+      url: `${document.location.origin}/api/auth/logout`,
+      success: () => goto('/home'),
+      error: (err, res) => console.error(err, res)
+    })
+  }
+
   window.feather = window.feather || { replace: () => null } // internet less setup
   function parseScripts (elmt) {
     if (elmt.tagName === 'SCRIPT') {
@@ -25,6 +49,7 @@
           parseScripts(document.getElementById('main')) // run scripts
           feather.replace()
           customAnchor()
+          document.getElementById('disconnect').onclick = disconnect
         } else if (res.code === 500) {
           document.getElementById('main').innerHTML = '<pre class="mt-5">Erreur 500: Erreur Interne du Serveur<br>Une erreur fatale est survenue. Veuillez en faire part immédiatement à l\'administrateur.</pre>'
         } else {
