@@ -22,6 +22,13 @@ export class Arduino extends EventEmitter {
   private main (): void {
     debug('Ready!')
     this.rfid.load()
+    this.rfidEvents()
+  }
+
+  private rfidEvents (): void {
+    this.rfid.on('rfidReceived', (rfid: string, isNew: boolean) => {
+      if (isNew) this.emit('rfidUpdate', rfid)
+    })
   }
 
   async getBook (id: string): Promise<boolean> {

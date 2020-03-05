@@ -1,12 +1,14 @@
+import { EventEmitter } from 'events'
 import utils from '../utils'
 import { Arduino } from '.'
 import { SERIAL_PORT_ID } from './board'
 
-export class RFID {
+export class RFID extends EventEmitter {
   private portId: SERIAL_PORT_ID
   private rfid: string = ''
 
   constructor (private arduino: Arduino) {
+    super()
     this.portId = arduino.board.SERIAL_PORT_IDs.DEFAULT
   }
 
@@ -27,6 +29,7 @@ export class RFID {
       if (data[0] === 2) {
         rfid = ''
       } else if (data[0] === 3) {
+        this.emit('rfidReceived', rfid, this.rfid !== rfid)
         this.rfid = rfid
       } else {
         rfid += String.fromCharCode(data[0])
