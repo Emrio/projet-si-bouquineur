@@ -2,9 +2,14 @@ import { RequestHandler } from 'express'
 import moment from 'moment'
 import { getUserHistory, updateBookStatus } from '../../../models/Update'
 import { getLibrary, getBorrowed, getBook } from '../../../models/Book'
+import { arduino } from '../../../arduino'
 
-export const getWelcomePage: RequestHandler = function (_req, res) {
-  return res.api.buildBoard('home', 'Bouquineur :: Welcome')
+export const getWelcomePage: RequestHandler = function (req, res, next) {
+  if (req.isAuthenticated()) {
+    return getDashboard(req, res, next)
+  } else {
+    return res.api.buildBoard('home', 'Bouquineur :: Welcome')
+  }
 }
 
 export const getDashboard: RequestHandler = function (req, res) {
