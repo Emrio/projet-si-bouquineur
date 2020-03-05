@@ -13,6 +13,7 @@ import utils from '../utils'
 import routes from './routes'
 import middlewares from './middlewares'
 import { socketting } from './socket'
+import './authentication'
 const debug = utils.debug('server')
 const MongoDBStore = mongodbstore(session)
 
