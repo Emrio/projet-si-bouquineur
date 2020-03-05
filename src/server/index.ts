@@ -7,14 +7,19 @@ import mongodbstore from 'connect-mongodb-session'
 import passport from 'passport'
 import moment from 'moment'
 import chalk from 'chalk'
+import http from 'http'
+import socketIO from 'socket.io'
 import utils from '../utils'
 import routes from './routes'
 import middlewares from './middlewares'
+import { socketting } from './socket'
 const debug = utils.debug('server')
 const MongoDBStore = mongodbstore(session)
 
 export default class Server {
   private server = express()
+  private httpServer = new http.Server(this.server)
+  public io = socketIO(this.httpServer)
   private session: express.RequestHandler
 
   constructor () {
@@ -57,11 +62,14 @@ export default class Server {
 
     debug('Setting up routes...')
     routes.setOn(this.server)
+
+    debug('Setting up socket...')
+    socketting(this.io)
   }
 
   public start () {
     const port = this.server.get('port')
-    this.server.listen(port, () => {
+    this.httpServer.listen(port, () => {
       debug('Server listening on port %o', port)
     })
   }
