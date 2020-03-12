@@ -1,6 +1,9 @@
 /* global $ XMLHttpRequest Image Base64 feather io */
 (function () {
-  console.log('hello')
+  function homeLoginError (message, isSystemError = false) {
+    $('#error-alert').text(message)
+    $('#error-alert').fadeIn(300).delay(1500).fadeOut(400)
+  }
   const socket = io(document.location.origin)
   socket.on('login', (rfid) => {
     console.log('requested login :', rfid)
@@ -10,7 +13,25 @@
       data: { rfid },
       dataType: 'json',
       success: () => goto('/dashboard'),
-      error: (err, res) => console.error(err, res)
+      error: (err, res) => {
+        switch (err.status) {
+          case 400:
+            homeLoginError('Erreur de validation des données')
+            break
+          case 404:
+            homeLoginError("La carte RFID n'est pas associée à un compte")
+            break
+          case 500:
+            homeLoginError('Erreur interne')
+            break
+          case 503:
+            homeLoginError('Aucune carte RFID a été détecté')
+            break
+          default:
+            homeLoginError('Erreur inconnue')
+        }
+        console.error(err, res)
+      }
     })
   })
 

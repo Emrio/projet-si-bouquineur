@@ -6,6 +6,7 @@ import { SERIAL_PORT_ID } from './board'
 export class RFID extends EventEmitter {
   private portId: SERIAL_PORT_ID
   private rfid: string = ''
+  private rfidGotTimestamp: number = 0
 
   constructor (private arduino: Arduino) {
     super()
@@ -31,6 +32,7 @@ export class RFID extends EventEmitter {
       } else if (data[0] === 3) {
         this.emit('rfidReceived', rfid, this.rfid !== rfid)
         this.rfid = rfid
+        this.rfidGotTimestamp = Date.now()
       } else {
         rfid += String.fromCharCode(data[0])
       }
@@ -38,6 +40,10 @@ export class RFID extends EventEmitter {
   }
 
   get currentRFID (): string {
-    return this.rfid
+    return Date.now() < this.rfidGotTimestamp + 2000 ? this.rfid : ''
+  }
+
+  public resetRFID (): void {
+    this.rfid = ''
   }
 }
