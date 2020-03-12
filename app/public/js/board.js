@@ -1,6 +1,16 @@
 /* global $ XMLHttpRequest Image Base64 feather io */
 (function () {
+  function playRandomErrorSound () {
+    const sounds = ['cestHonteux', 'quelleIndignite']
+    const sound = sounds[Math.round(Math.random() * sounds.length)] || sounds[0]
+    console.log(sound)
+    const soundElement = document.getElementById(sound + 'Sound')
+    soundElement.play()
+  }
   function homeLoginError (message, isSystemError = false) {
+    if (!isSystemError) {
+      playRandomErrorSound()
+    }
     $('#error-alert').text(message)
     $('#error-alert').fadeIn(300).delay(1500).fadeOut(400)
   }
