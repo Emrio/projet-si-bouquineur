@@ -7,6 +7,7 @@
     const soundElement = document.getElementById(sound + 'Sound')
     soundElement.play()
   }
+
   function homeLoginError (message, isSystemError = false) {
     if (!isSystemError) {
       playRandomErrorSound()
@@ -14,6 +15,7 @@
     $('#error-alert').text(message)
     $('#error-alert').fadeIn(300).delay(1500).fadeOut(400)
   }
+
   const socket = io(document.location.origin)
   socket.on('login', (rfid) => {
     console.log('requested login :', rfid)
