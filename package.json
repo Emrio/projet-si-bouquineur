@@ -47,7 +47,7 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "serialport": "^8.0.5",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "typescript": "^3.6.3"
   }
 }
